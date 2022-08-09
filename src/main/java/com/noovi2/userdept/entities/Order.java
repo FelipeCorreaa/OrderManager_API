@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.noovi2.userdept.entities.enums.OrderStatus;
+
 @Entity
 @Table(name = "tb_order")
 public class Order implements Serializable {
@@ -20,22 +24,27 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private Instant moment;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment;
 	
-	//Relacionando o client com pedido
+	private Integer orderSatus;
+	
+
+	// Relacionando o client com pedido
 	@ManyToOne
-	@JoinColumn (name = "client_id")
+	@JoinColumn(name = "client_id")
 	private User client;
 
 	public Order() {
 
 	}
 
-	public Order(Long id, Instant moment, User client) {
+	public Order(Long id, Instant moment, OrderStatus orderSatus ,User client) {
 		super();
 		this.id = id;
 		this.moment = moment;
+		setOrderSatus (orderSatus);
 		this.client = client;
 	}
 
@@ -53,6 +62,20 @@ public class Order implements Serializable {
 
 	public void setMoment(Instant moment) {
 		this.moment = moment;
+	}
+
+	
+	
+	
+	public OrderStatus getOrderSatus() {
+		return OrderStatus.valueOf(orderSatus);
+	}
+
+	public void setOrderSatus(OrderStatus orderSatus) {
+		if (orderSatus != null) 
+		{
+		this.orderSatus = orderSatus.getCode();
+		}
 	}
 
 	public User getClient() {
