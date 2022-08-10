@@ -11,12 +11,14 @@ import org.springframework.context.annotation.Profile;
 import com.noovi2.userdept.entities.Category;
 import com.noovi2.userdept.entities.OrdenItem;
 import com.noovi2.userdept.entities.Order;
+import com.noovi2.userdept.entities.Payment;
 import com.noovi2.userdept.entities.Product;
 import com.noovi2.userdept.entities.User;
 import com.noovi2.userdept.entities.enums.OrderStatus;
 import com.noovi2.userdept.repositories.CategoryRepository;
 import com.noovi2.userdept.repositories.OrderItemRepository;
 import com.noovi2.userdept.repositories.OrderRepository;
+import com.noovi2.userdept.repositories.PaymentRepository;
 import com.noovi2.userdept.repositories.ProductRepository;
 import com.noovi2.userdept.repositories.UserRepository;
 //CLASSE PARA TESTES DO BANCO DE DADOS PARA INICIAR ARQUIVOS NO BD
@@ -34,7 +36,8 @@ public class TestConfig implements CommandLineRunner {
 	private ProductRepository produtcRepository;
 	@Autowired
 	private OrderItemRepository orderItemRepository;
-	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	
 	@Override
@@ -77,10 +80,12 @@ public class TestConfig implements CommandLineRunner {
 		OrdenItem oi4 = new OrdenItem(o3, p5, 2, p5.getPrice());
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
+
+		Payment pay1 = new Payment (null,Instant.parse("2022-07-21T05:42:10Z"),o2);
+		o2.setPayment(pay1);
+		orderRepository.save(o2);
 		
 		
-		
-	
 	}
 	
 	
