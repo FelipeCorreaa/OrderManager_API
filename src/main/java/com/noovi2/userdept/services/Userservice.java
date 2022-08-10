@@ -34,5 +34,28 @@ public class Userservice {
 		return repository.save(obj);
 		
 	}
+
+
+	public void delete (Long id) {
+		repository.deleteById(id);
+		
+	}
 	
+	
+	public User update (Long id , User obj) {
+		
+		User entity = repository.getOne(id); // getone ele prepara o objeto antes de salvar.
+		
+		updateData (entity,obj);
+		return repository.save(entity);
+		
+	}
+
+
+	private void updateData(User entity, User obj) {
+		//atualizar os dados do entity com os campos do obj
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+	}
 }
