@@ -12,7 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_product")
@@ -38,6 +41,20 @@ public class Product implements Serializable {
 	// uma categoria
 	private Set<Category> categories = new HashSet<>(); // Set Hashset semelhante ao list arraylist
 
+	
+	
+	
+	
+	
+	@OneToMany(mappedBy = "id.product")// mapear no pk o pediro pelo ID, ver os itens do pedido por ID
+	// o id foi mapedo no "private OrderItemPk id = new OrderItemPk();" e o product esta dentro do pk private product product.
+	
+	
+	private Set <OrdenItem> items = new HashSet<>(); // SEt pra informar que não tera repetições no JPA
+	
+	
+	
+	
 	public Product() {
 
 	}
@@ -93,6 +110,15 @@ public class Product implements Serializable {
 
 	public Set<Category> getCategories() {
 		return categories;
+	}
+	
+	@JsonIgnore
+	public Set <Order> getOrders (){
+		Set <Order> set = new HashSet<>();
+		for (OrdenItem x : items) { // percorrendo a coleção Items , vamos adicionar x ao get order.
+			set.add(x.getOrder());
+		}
+		return set;
 	}
 
 	@Override
