@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.noovi2.userdept.entities.Category;
+import com.noovi2.userdept.entities.OrdenItem;
 import com.noovi2.userdept.entities.Order;
 import com.noovi2.userdept.entities.Product;
 import com.noovi2.userdept.entities.User;
 import com.noovi2.userdept.entities.enums.OrderStatus;
 import com.noovi2.userdept.repositories.CategoryRepository;
+import com.noovi2.userdept.repositories.OrderItemRepository;
 import com.noovi2.userdept.repositories.OrderRepository;
 import com.noovi2.userdept.repositories.ProductRepository;
 import com.noovi2.userdept.repositories.UserRepository;
@@ -30,7 +32,11 @@ public class TestConfig implements CommandLineRunner {
 	private CategoryRepository categoryRepository;
 	@Autowired
 	private ProductRepository produtcRepository;
-
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
+	
+	
 	@Override
 	public void run(String... args) throws Exception {
 		User u1 = new User (null,"Maria Joaquina","Maria@gmail.com","911111111","123456");
@@ -65,6 +71,11 @@ public class TestConfig implements CommandLineRunner {
 		p5.getCategories().add(cat1);
 		produtcRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
+		OrdenItem oi1 = new OrdenItem(o1, p1, 2, p1.getPrice());
+		OrdenItem oi2 = new OrdenItem(o1, p3, 1, p3.getPrice());
+		OrdenItem oi3 = new OrdenItem(o2, p3, 2, p3.getPrice());
+		OrdenItem oi4 = new OrdenItem(o3, p5, 2, p5.getPrice());
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 		
 		
 		
