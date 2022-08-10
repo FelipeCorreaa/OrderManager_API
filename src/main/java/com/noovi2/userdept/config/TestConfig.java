@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.noovi2.userdept.entities.Category;
 import com.noovi2.userdept.entities.Order;
+import com.noovi2.userdept.entities.Product;
 import com.noovi2.userdept.entities.User;
 import com.noovi2.userdept.entities.enums.OrderStatus;
 import com.noovi2.userdept.repositories.CategoryRepository;
 import com.noovi2.userdept.repositories.OrderRepository;
+import com.noovi2.userdept.repositories.ProductRepository;
 import com.noovi2.userdept.repositories.UserRepository;
 //CLASSE PARA TESTES DO BANCO DE DADOS PARA INICIAR ARQUIVOS NO BD
 @Configuration
@@ -26,6 +28,8 @@ public class TestConfig implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private CategoryRepository categoryRepository;
+	@Autowired
+	private ProductRepository produtcRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -40,12 +44,19 @@ public class TestConfig implements CommandLineRunner {
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));//Salvar no banco de dados
 		
 		
-		Category cat1 = new Category(null, "PS5");
-		Category cat2 = new Category(null, "Computador");
-		Category cat3 = new Category(null, "Celular");
+		Category cat1 = new Category(null, "Eletronicos");
+		Category cat2 = new Category(null, "Livros");
+		Category cat3 = new Category(null, "Computadores");
 		categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));//Salvar no banco de dados
 		
 		
+		
+		Product p1 = new Product(null, "Senhor dos aneis", "Livro fantasia do frodo", 90.5, "");
+		Product p2 = new Product(null, "Smart TV", "Televisão LED 4k", 2190.0, "");
+		Product p3 = new Product(null, "Macbook Pro", "Produto muito caroooo", 1250.0, "");
+		Product p4 = new Product(null, "PC Gamer", "Um sonho de qualquer pessoa", 1200.0, "");
+		Product p5 = new Product(null, "Batedeira", "Batedeira para paes.", 100.99, "");
+		produtcRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));//Salvar no banco de dados
 	
 	}
 	
